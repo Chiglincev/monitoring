@@ -8,8 +8,8 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws IOException  {
-        String inputPath = "src/main/java/Таблицы/Мониторинг";
-        String tablePath = "src/main/java/Таблицы/allAPKF.csv";
+        String inputPath = "C:\\Users\\Admin\\IdeaProjects\\monitoring\\src\\main\\java\\Таблицы\\Мониторинг";
+        String tablePath = "C:/Users/Admin/IdeaProjects/monitoring/src/main/java/Таблицы/allAPKF.csv";
 
         try (CSVReader csvReader = new CSVReader(new FileReader(tablePath))) {
             List<String[]> allRows = csvReader.readAll();

@@ -1,12 +1,14 @@
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class Monitoring {
     private static final int CELL = 25;
@@ -19,7 +21,7 @@ public class Monitoring {
     SimpleDateFormat DH = new SimpleDateFormat("yyyy MM.dd HH 'ч'");
     String time = HH.format(dateNow);
     String dayTime = DH.format(dateNow);
-    String outputPath = "src/main/java/Таблицы/Мониторинг/Невыгрузки";
+    String outputPath = "C:\\Users\\Admin\\IdeaProjects\\monitoring\\src\\main\\java\\Таблицы\\Мониторинг\\Невыгрузки";
 
 
     public Monitoring(String filePath) {
@@ -61,7 +63,11 @@ public class Monitoring {
 
     public void output() throws IOException{
         File csv = new File (outputPath, "Невыгрузки " + dayTime + ".csv");
-        csv.createNewFile();
+        if (csv.exists()) {
+            csv.delete();
+        } else {
+            csv.createNewFile();
+        }
         try (CSVWriter writer = new CSVWriter(new FileWriter(csv, true), ';')) {
             for (Map.Entry<APKF, Integer> entry : empty.entrySet().stream().
                     sorted(Map.Entry.<APKF, Integer>comparingByValue().reversed()).
@@ -72,6 +78,7 @@ public class Monitoring {
                 out.append(key.toString()).append(";").append(value);
                 String[] output = out.toString().split(";");
                 writer.writeNext(output);
+                Desktop.getDesktop().open(csv);
             }
         } catch (IOException e) {
             e.printStackTrace();
